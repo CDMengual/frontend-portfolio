@@ -1,0 +1,106 @@
+<nav class="barra">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-between row">
+      <a href="#" class="logoap d-flex align-items-center justify-content-center col-lg-auto col-sm-auto"><img
+          src="../../../assets/imagenes/APLogo-20-20.png" alt="Logo Argentina Programa" id="logoap">#YoProgramo</a>
+      <div class="redes col-lg-auto col-sm-auto">
+        <ul class=" nav d-flex align-items-center  justify-content-center">
+          <li class="nav-item"><a href="https://wa.me/541165119855" target="_blank"><i
+                class="fa-brands fa-whatsapp"></i></a></li>
+          <li class="nav-item"><a href="mailto:cdmengual@gmail.com" target="_blank"><i
+                class="fa-solid fa-envelope"></i></a></li>
+          <li class="nav-item"><a href="https://github.com/CDMengual" target="_blank"><i
+                class="fa-brands fa-github"></i></a></li>
+          <li class="nav-item"><a href="https://www.instagram.com/cesarmengual_/?hl=es-la" target="_blank"><i
+                class="fa-brands fa-instagram"></i></a></li>
+          <li class="nav-item"><a href="https://www.linkedin.com/in/cesar-mengual-0187182b" target="_blank"><i
+                class="fa-brands fa-linkedin-in"></i></a></li>
+                <li *ngIf="logueado" class="nav-item"><a style="cursor: pointer;" (click)="cerrarSesion()"><i class="fas fa-door-open" id="loginimg" ></i></a></li>
+                <li *ngIf="!logueado" class="nav-item"><a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#formLogin"><i class="fas fa-user" id="loginimg" ></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid banner" [ngStyle]="{'background': 'url(' + imagen + ') center'}">
+  <div class="banner-text">
+    <div>
+      <div>
+        <h1 id="name">{{info?.nombre}} {{info?.apellido}}</h1>
+        <h2 id="titulo">{{info?.puesto}}</h2>
+        <h3 id="cuidad">{{info?.ciudad}}</h3>
+      </div>
+      <div>
+        <button mat-mini-fab type="button" data-bs-toggle="modal" data-bs-target="#formInfoPersonal" *ngIf="logueado"
+          (click)="cargarFormulario()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="formLogin" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Iniciar Sesión</h2>
+      </div>
+      <div class="modal-body">
+        <app-login></app-login>
+      </div>
+      
+    </div>
+
+  </div>
+ 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="formInfoPersonal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Datos Personales</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formHeader">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre"
+              placeholder="Nombre">
+            <div *ngIf="nombre?.invalid && nombre?.touched" class="text-danger">Debe completar su nombre.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" formControlName="apellido"
+              placeholder="Apellido">
+            <div *ngIf="apellido?.invalid && apellido?.touched" class="text-danger">Debe completar su apellido.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="posicion" class="form-label">Posición</label>
+            <input type="text" class="form-control" id="posicion" formControlName="posicion" placeholder="Posición">
+            <div *ngIf="posicion?.invalid && posicion?.touched" class="text-danger">Debe completar este campo</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="ciudadDeResidencia">Ciudad de residencia</label>
+            <input type="text" class="form-control" id="ciudadDeResidencia" formControlName="ciudadDeResidencia"
+              placeholder="Ciudad de residencia">
+            <div *ngIf="ciudadDeResidencia?.invalid && ciudadDeResidencia?.touched" class="text-danger">Debe completar
+              este campo</div>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="cambiosGuardados()">Guardar
+          cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

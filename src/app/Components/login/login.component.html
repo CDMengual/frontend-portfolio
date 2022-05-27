@@ -1,0 +1,30 @@
+<form [formGroup]=formLogin (ngSubmit)="onEnviar($event)">
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" formControlName="email" 
+    [ngClass]="{'is-invalid': email?.errors && email?.touched,'is-valid': !email?.errors && email?.touched}"
+    class="form-control" id="email" aria-describedby="email">
+    <div *ngIf="email?.errors && email?.touched">
+      <p *ngIf="email?.hasError('required')" class="text-danger">
+          Se requiere email
+      </p>
+      <p *ngIf="email?.hasError('email')" class="text-danger">
+          Formato de email invalido
+      </p>
+  </div>  
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Contraseña</label>
+    <input type="password" formControlName="password" 
+    [ngClass]="{'is-invalid': password?.errors && password?.touched,'is-valid': !password?.errors && password?.touched}"
+    class="form-control" id="password">
+    <div *ngIf="password?.errors && password?.touched">
+      <p *ngIf="password?.hasError('required')" class="text-danger">
+          Debe ingresar su contraseña
+      </p>
+  </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+  <a  #closeModal data-bs-dismiss="modal" aria-label="Close"></a>
+  <div *ngIf="error">Usuario o contraseña incorrecta</div>
+</form>

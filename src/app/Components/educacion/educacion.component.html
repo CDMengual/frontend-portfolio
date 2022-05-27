@@ -1,0 +1,153 @@
+<div class="container-fluid educacion">
+    <h3 class="titulofluid">/// Educación</h3>
+    <div class="container-fluid" style="display: inline-flex; justify-content: center; flex-wrap: wrap;">
+        <div *ngFor="let estudio of estudios; let indice=index">
+        <div class="card bg-dark">
+            <img src={{estudio.logo}} style="max-width: 200px; height: 70px;" class="card-img-top img-fluid" alt="Logo">
+            <div class="card-body">
+                <h4 class="card-title">{{estudio.titulo}}</h4>
+                <h5 class="card-subtitle">{{estudio.instituto}}</h5>
+                <p class="card-text">Fecha de egreso {{estudio.fecha_egreso |date:'dd/MM/yyyy'}}</p>
+            </div> 
+            <div class="d-flex justify-content-end">
+                <button mat-mini-fab type="button" data-bs-toggle="modal" data-bs-target="#formEducacion" *ngIf="logueado"
+                    (click)="cargarFormulario(indice)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-mini-fab color="warn" type="button" data-bs-toggle="modal" data-bs-target="#borrarEducacion"  *ngIf="logueado"
+                    (click)="deseaEliminar(estudio.id!)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+        <button mat-mini-fab color="primary" style="display: block; margin: auto;" type="button" data-bs-toggle="modal"
+        data-bs-target="#addEducacion"  *ngIf="logueado">
+        <mat-icon>add</mat-icon>
+        </button>
+   
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="formEducacion" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Formación Academica</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formEducacion">
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="titulo" formControlName="titulo"
+                            placeholder="Título obtenido">
+                        <div *ngIf="titulo?.invalid && titulo?.touched" class="text-danger">Debe completar este
+                            campo.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="insituto" class="form-label">Institución educativa</label>
+                        <input type="text" class="form-control" id="instituto" formControlName="instituto"
+                            placeholder="Institución educativa">
+                        <div *ngIf="instituto?.invalid && instituto?.touched" class="text-danger">Debe completar
+                            este campo</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="fecha_egreso">Fecha de egreso</label>
+                        <input type="date" class="form-control" id="fecha_egreso" formControlName="fecha_egreso">
+                        <div *ngIf="fecha_egreso?.invalid && fecha_egreso?.touched" class="text-danger">Debe
+                            completar este campo</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="logo">Logo del instituto</label>
+                        <input type="text" class="form-control" id="logo" formControlName="logo"
+                            placeholder="Tareas">
+                        <div *ngIf="logo?.invalid && logo?.touched" class="text-danger">Debe completar este campo
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="cambiosGuardados()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal de borrar -->
+<div class="modal fade" id="borrarEducacion" tabindex="-1" aria-labelledby="borrarEducacionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="borrarEducacion">Borrar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="confirmar" class="form-label">¿Esta Segura/o que desea borrar este campo?</label>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="borrarEducacion()">Sí</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar-->
+<div class="modal fade" id="addEducacion" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Añadir Formación Academica</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formEducacion">
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título</label>
+                        <input type="text" class="form-control apo" id="titutlo" formControlName="titulo"
+                            placeholder="Título obtenido"> 
+                        <div *ngIf="titulo?.invalid && titulo?.touched" class="text-danger">Debe completar este
+                            campo.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="insituto" class="form-label">Institución educativa</label>
+                        <input type="text" class="form-control" id="instituto" formControlName="instituto"
+                            placeholder="Institución educativa">
+                        <div *ngIf="instituto?.invalid && instituto?.touched" class="text-danger">Debe completar
+                            este campo</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="fecha_egreso">Fecha de egreso</label>
+                        <input type="date" class="form-control" id="fecha_egreso" formControlName="fecha_egreso"> 
+                        <div *ngIf="fecha_egreso?.invalid && fecha_egreso?.touched" class="text-danger">Debe
+                            completar este campo</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="logo">Logo del instituto</label>
+                        <input type="text" class="form-control" id="logo" formControlName="logo"
+                            placeholder="Tareas">
+                        <div *ngIf="logo?.invalid && logo?.touched" class="text-danger">Debe completar este campo
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="crearEducacion()"
+                    >Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

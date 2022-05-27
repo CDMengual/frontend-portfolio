@@ -1,0 +1,147 @@
+<div class="container-fluid habilidades">
+    <h3 class="titulofluid">/// Habilidades</h3>
+        <div class="container-fluid" style="display: inline-flex; justify-content: center; flex-wrap: wrap;">
+            <div *ngFor="let habilidad of habilidades; let indice=index"  style="display: inline-block;" >
+                <div class="card">            
+                    <h4 class="card-body" style="margin-bottom: 10px ; padding: 0px;">{{habilidad.skill}}</h4>
+                    <img src={{habilidad.logo}} class="logo" alt="html 5">
+                    <mat-progress-spinner [value]=habilidad.puntuacion*10 class="spinner"></mat-progress-spinner>
+                    <div>
+                    <button mat-mini-fab color="accent" type="button" data-bs-toggle="modal" data-bs-target="#formHabilidad" *ngIf="logueado" (click)="cargarFormulario(indice)">
+                    <mat-icon>edit</mat-icon></button>
+                    <button mat-mini-fab color="warn" type="button" data-bs-toggle="modal" *ngIf="logueado"
+                        data-bs-target="#borrarHabilidad"  (click)="deseaEliminar(habilidad.id!)">
+                        <mat-icon>delete</mat-icon>
+                    
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button mat-mini-fab color="primary" style="display: block; margin: auto;" type="button" data-bs-toggle="modal" *ngIf="logueado"
+        data-bs-target="#addHabilidad" >
+        <mat-icon>add</mat-icon>
+        </button>
+</div>
+
+<!-- Modal Editar-->
+<div class="modal fade" id="formHabilidad" tabindex="-1" aria-labelledby="habilidadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="habilidadForm">Habilidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formHabilidad">
+                    <div class="mb-3">
+                        <label for="skill" class="form-label">Habilidad</label>
+                        <input type="text" class="form-control" id="skill" formControlName="skill" placeholder="Habilidad">
+                            <div *ngIf="skill?.invalid && (skill?.touched)" class="text-danger">
+                               Debe completar este campo
+                            </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="puntuacion" class="form-label">Puntuación</label>
+                        <select selected="0" name="puntuacion" class="form-control" id="puntuacion" formControlName="puntuacion">
+                            <option value="0">Elige una opción</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <div *ngIf="puntuacion?.invalid && (puntuacion?.touched)" class="text-danger">
+                            Debe seleccionar una opción
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="logo" class="form-label">Logo</label>
+                        <input type="text" class="form-control" id="logo" formControlName="logo" placeholder="Enlace del logo">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cerrarHabilidadesModal" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="cambiosGuardados()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal borrar-->
+<div class="modal fade" id="borrarHabilidad" tabindex="-1" aria-labelledby="borrarHabilidadLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="borrarHabilidad">Borrar Habilidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="confirmar" class="form-label">¿Estás Segura/o?</label>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="borrarHabilidad()">Sí</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Agregar-->
+<div class="modal fade" id="addHabilidad" tabindex="-1" aria-labelledby="addHabilidadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addHabilidad">Habilidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formHabilidad">
+                    <div class="mb-3">
+                        <label for="skill" class="form-label">Habilidad</label>
+                        <input type="text" class="form-control" id="skill" formControlName="skill" placeholder="Habilidad">
+                            <div *ngIf="skill?.invalid && (skill?.touched)" class="text-danger">
+                               Debe completar este campo
+                            </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="puntuacion" class="form-label">Puntuación</label>
+                        <select selected="0" name="puntuacion" class="form-control" id="puntuacion" formControlName="puntuacion">
+                            <option value="0">Elige una opción</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <div *ngIf="puntuacion?.invalid && (puntuacion?.touched)" class="text-danger">
+                            Debe seleccionar una opción
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="logo" class="form-label">Logo</label>
+                        <input type="text" class="form-control" id="logo" formControlName="logo" placeholder="Enlace del logo">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cerrarHabilidadesModal" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="crearHabilidad()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+

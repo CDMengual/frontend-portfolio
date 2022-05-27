@@ -1,0 +1,159 @@
+<div class="container-fluid experiencia">
+    <h3 class="titulofluid">/// Experiencia</h3>
+    <div *ngFor="let trabajo of experiencias; let indice=index">
+      <div class="card" style="max-width: 100%;">
+        <div class="row g-0 ">
+          <div class="col-md-3" style="padding: 30px;">
+            <img src={{trabajo.logo}} width="200px"  class="img-fluid" alt="Logo">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h4 class="card-title">{{trabajo.empresa}}</h4>
+              <h5 class="card-subtitle">{{trabajo.cargo}}</h5>
+              <h5 class="card-subtitle">Desde {{trabajo.fechaInicio |date:'dd/MM/yyyy'}}</h5>
+              <h5 class="card-subtitle">Hasta {{trabajo.fechaFin |date:'dd/MM/yyyy'}}</h5>
+              <p class="card-text">{{trabajo.tareas}}</p>
+            </div>
+          </div>
+            <button mat-mini-fab  type="button" data-bs-toggle="modal" *ngIf="logueado"
+          data-bs-target="#formExperiencia" (click)="cargarFormulario(indice)">
+          <mat-icon>edit</mat-icon>
+          </button>
+             <button mat-mini-fab color="warn" type="button" data-bs-toggle="modal" *ngIf="logueado"
+          data-bs-target="#borrarExperiencia" (click)="deseaEliminar(indice)">
+          <mat-icon>delete</mat-icon>
+          </button>          
+        </div>
+      </div>
+    <div>
+  </div>  
+</div>
+<button mat-mini-fab color="primary" style="display: block; margin: auto;" type="button" data-bs-toggle="modal" *ngIf="logueado"  
+data-bs-target="#addExperiencia" >
+<mat-icon>add</mat-icon>
+</button>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="formExperiencia" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Información laboral</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="formExperiencia">
+                <div class="mb-3">
+                  <label for="empresa" class="form-label">Empresa/Institución</label>
+                  <input type="text" class="form-control" id="empresa" formControlName="empresa" placeholder="Nombre empresa/institución">
+                  <div *ngIf="empresa?.invalid && empresa?.touched" class="text-danger">Debe completar este campo.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="cargo" class="form-label">Cargo</label>
+                  <input type="text" class="form-control" id="cargo" formControlName="cargo" placeholder="Cargo">
+                  <div *ngIf="cargo?.invalid && cargo?.touched" class="text-danger">Debe completar este campo</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="fechaInicio">Año</label>
+                    <input type="date" class="form-control" id="fechaInicio" formControlName="fechaInicio">
+                    <div *ngIf="fechaInicio?.invalid && fechaInicio?.touched" class="text-danger">Debe completar este campo</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="fechaFin">Fecha de finalizacion de actividades</label>
+                  <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin">
+              </div>
+                <div class="mb-3">
+                    <label class="form-label" for="tareas">Tareas</label>
+                    <input type="text" class="form-control" id="tareas" formControlName="tareas" placeholder="Tareas">
+                    <div *ngIf="tareas?.invalid && tareas?.touched" class="text-danger">Debe completar este campo</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="logo">Logo</label>
+                  <input type="text" class="form-control" id="logo" formControlName="logo" placeholder="URL logo">
+              </div>
+            </form>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="cambiosGuardados()">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+   
+   
+<!-- Modal de borrar -->
+<div class="modal fade" id="borrarExperiencia" tabindex="-1" aria-labelledby="borrarExperienciaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="borrarExperienciaLabel">Borrar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <label for="confirmar" class="form-label">¿Esta Segura/o que desea borrar este campo?</label>
+              
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="borrarExperiencia()">Sí</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          </div>
+      </div>
+</div>
+</div>
+    
+
+<!-- Modal Agregar-->
+<div class="modal fade" id="addExperiencia" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Información laboral</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup]="formExperiencia">
+              <div class="mb-3">
+                <label for="empresa" class="form-label">Empresa/Institución</label>
+                <input type="text" class="form-control" id="empresa" formControlName="empresa" placeholder="Nombre empresa/institución">
+                <div *ngIf="empresa?.invalid && empresa?.touched" class="text-danger">Debe completar este campo.</div>
+              </div>
+              <div class="mb-3">
+                <label for="cargo" class="form-label">Cargo</label>
+                <input type="text" class="form-control" id="cargo" formControlName="cargo" placeholder="Cargo">
+                <div *ngIf="cargo?.invalid && cargo?.touched" class="text-danger">Debe completar este campo</div>
+              </div>
+              <div class="mb-3">
+                  <label class="form-label" for="fechaInicio">Año</label>
+                  <input type="date" class="form-control" id="fechaInicio" formControlName="fechaInicio">
+                  <div *ngIf="fechaInicio?.invalid && fechaInicio?.touched" class="text-danger">Debe completar este campo</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="fechaFin">Fecha de finalizacion de actividades</label>
+                <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin">
+            </div>
+              <div class="mb-3">
+                  <label class="form-label" for="tareas">Tareas</label>
+                  <input type="text" class="form-control" id="tareas" formControlName="tareas" placeholder="Tareas">
+                  <div *ngIf="tareas?.invalid && tareas?.touched" class="text-danger">Debe completar este campo</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="logo">Logo</label>
+                <input type="text" class="form-control" id="logo" formControlName="logo" placeholder="URL logo">
+            </div>
+          </form>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="crearExperiencia()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+    

@@ -1,0 +1,51 @@
+<div class="container-fluid">
+   <div class="d-flex flex-wrap acerca-de align-items-center justify-content-center">
+      <div class="imagen col-lg-3  align-item-center justify-content-end d-flex ">
+         <img src={{info?.url_foto}} alt="Puente" id="foto-puente">
+      </div>
+      <div class="info align-items-center justify-content-center col-lg-7">
+         <h1>Acerca de mi</h1>
+         <div class="d-flex info-acerca-de">
+            <p>{{info?.acerca_de_mi}}</p>
+            
+         </div>
+         <div>
+            <button mat-mini-fab  type="button" data-bs-toggle="modal" *ngIf="logueado"
+               data-bs-target="#formInfoAcercaDe" (click)="cargarFormulario()">
+               <mat-icon>edit</mat-icon>
+            </button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="formInfoAcercaDe" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Acerca de mi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="formAcercaDe">
+                <div class="mb-3">
+                  <label for="acercaDeMi" class="form-label">Redactar información</label>
+                  <input type="text" class="form-control eti" id="acercaDeMi" formControlName="acerca_de_mi" placeholder="Escriba aquí">
+                  <div *ngIf="acerca_de_mi?.invalid && acerca_de_mi?.touched" class="text-danger">Debe completar este campo.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="url_foto" class="form-label">Url Foto</label>
+                  <input type="text" class="form-control eti" id="url_foto" formControlName="url_foto" placeholder="Escriba aquí la url de la imágen">
+                  <div *ngIf="url_foto?.invalid && url_foto?.touched" class="text-danger">Debe completar este campo.</div>
+                </div>
+            </form>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="cambiosGuardados()">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>

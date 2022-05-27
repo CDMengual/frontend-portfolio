@@ -1,0 +1,123 @@
+<div class="container-fluid proyecto">
+    <h3 class="titulofluid">/// Proyectos</h3>
+    <div *ngFor="let proyecto of proyectos; let indice=index">
+<div class="card mb-3">
+    <img src={{proyecto.imagen}}  class="card-img-top img-fluid " alt="imagen-proyecto">
+    <div class="card-body info">
+      <h2 class="card-title">{{proyecto.nombreProyecto}}</h2>
+      <h4 class="card-text">{{proyecto.info}}</h4>
+    </div>
+    <div class="d-flex m-auto">
+    <button mat-mini-fab class="m-3" type="button" data-bs-toggle="modal" *ngIf="logueado"
+    data-bs-target="#formProyecto" (click)="cargarFormulario(indice)">
+    <mat-icon>edit</mat-icon>
+    </button>
+       <button mat-mini-fab class="m-3" color="warn" type="button" data-bs-toggle="modal" *ngIf="logueado"
+    data-bs-target="#borrarProyecto" (click)="deseaEliminar(proyecto.id!)">
+    <mat-icon>delete</mat-icon>
+    </button>
+</div>  
+  </div>
+</div>
+<button mat-mini-fab color="primary" style="display: block; margin: auto;" type="button" data-bs-toggle="modal" *ngIf="logueado"  
+data-bs-target="#addProyecto" >
+<mat-icon>add</mat-icon>
+</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="formProyecto" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Proyectos Desarrollados</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="formProyecto">
+                <div class="mb-3">
+                  <label for="nombreProyecto" class="form-label">Nombre del Proyecto</label>
+                  <input type="text" class="form-control" id="nombreProyecto" formControlName="nombreProyecto" placeholder="Nombre Proyecto">
+                  <div *ngIf="nombreProyecto?.invalid && nombreProyecto?.touched" class="text-danger">Debe completar este campo.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="info" class="form-label">Informacion del Proyecto</label>
+                  <input type="text" class="form-control" id="info" formControlName="info" placeholder="Informacion del Proyecto">
+                  <div *ngIf="info?.invalid && info?.touched" class="text-danger">Debe completar este campo</div>
+                </div>
+                <div class="mb-3">
+                    <label for="imagen" class="form-label">URL de la Imágen del Proyecto</label>
+                    <input type="text" class="form-control" id="info" formControlName="imagen" placeholder="URL imágen del Proyecto">
+                    <div *ngIf="imagen?.invalid && imagen?.touched" class="text-danger">Debe completar este campo</div>
+                  </div>
+            </form>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="cambiosGuardados()">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+   
+   
+<!-- Modal de borrar -->
+<div class="modal fade" id="borrarProyecto" tabindex="-1" aria-labelledby="borrarProyectoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="borrarProyectoLabel">Borrar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <label for="confirmar" class="form-label">¿Esta Segura/o que desea borrar este proyecto?</label>
+              
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="borrarProyecto()">Sí</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          </div>
+      </div>
+</div>
+</div>
+    
+
+<!-- Modal Agregar-->
+<div class="modal fade" id="addProyecto" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Información del Proyecto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup]="formProyecto">
+              <div class="mb-3">
+                <label for="nombreProyecto" class="form-label">Nombre del Proyecto</label>
+                <input type="text" class="form-control" id="nombreProyecto" formControlName="nombreProyecto" placeholder="Nombre del Proyecto">
+                <div *ngIf="nombreProyecto?.invalid && nombreProyecto?.touched" class="text-danger">Debe completar este campo.</div>
+              </div>
+              <div class="mb-3">
+                <label for="info" class="form-label">Información del Proyecto</label>
+                <input type="text" class="form-control" id="info" formControlName="info" placeholder="Información del Proyecto">
+                <div *ngIf="info?.invalid && info?.touched" class="text-danger">Debe completar este campo</div>
+              </div>
+              <div class="mb-3">
+                <label for="imagen" class="form-label">URL de la Imágen del Proyecto</label>
+                <input type="text" class="form-control" id="imagen" formControlName="imagen" placeholder="URL de la Imágen del Proyecto">
+                <div *ngIf="imagen?.invalid && imagen?.touched" class="text-danger">Debe completar este campo</div>
+              </div>
+          </form>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="crearProyecto()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+    
